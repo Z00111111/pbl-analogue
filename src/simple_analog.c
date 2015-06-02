@@ -21,7 +21,6 @@ static void bg_update_proc(Layer *layer, GContext *ctx) {
 
 static void hands_update_proc(Layer *layer, GContext *ctx) {
   GRect bounds = layer_get_bounds(layer);
-  GPoint center = grect_center_point(&bounds);
 
   time_t now = time(NULL);
   struct tm *t = localtime(&now);
@@ -86,12 +85,17 @@ static void window_load(Window *window) {
   text_layer_set_text_color(s_num_label, GColorWhite);
   text_layer_set_font(s_num_label, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
 
-  layer_add_child(s_date_layer, text_layer_get_layer(s_num_label));
+  layer_add_child(s_date_layer, text_layer_get_layer(s_num_label));\
+
+	s_hands_layer = layer_create(bounds);
+  layer_set_update_proc(s_hands_layer, hands_update_proc);
+  layer_add_child(window_layer, s_hands_layer);
 }
 
 static void window_unload(Window *window) {
   layer_destroy(s_simple_bg_layer);
   layer_destroy(s_date_layer);
+	layer_destroy(s_hands_layer);
 
   text_layer_destroy(s_day_label);
   text_layer_destroy(s_num_label);
@@ -115,7 +119,8 @@ static void init() {
 
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
-  gpath_move_to(s_hour_arrow, center);
+	GPoint center = grect_center_point(&bounds);
+	gpath_move_to(s_hour_arrow, center);
 	gpath_move_to(s_minute_arrow, center);
 	gpath_move_to(s_second_arrow, center);
 
