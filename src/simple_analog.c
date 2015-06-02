@@ -31,17 +31,17 @@ static void hands_update_proc(Layer *layer, GContext *ctx) {
 	
 	graphics_context_set_antialiased(ctx, true);
 
-  gpath_rotate_to(s_second_arrow, TRIG_MAX_ANGLE * t->tm_sec / 60);
-  gpath_draw_filled(ctx, s_second_arrow);
-  gpath_draw_outline(ctx, s_second_arrow);
-	
+  gpath_rotate_to(s_hour_arrow, (TRIG_MAX_ANGLE * (((t->tm_hour % 12) * 6) + (t->tm_min / 10))) / (12 * 6));
+  gpath_draw_filled(ctx, s_hour_arrow);
+  gpath_draw_outline(ctx, s_hour_arrow);
+
   gpath_rotate_to(s_minute_arrow, TRIG_MAX_ANGLE * t->tm_min / 60);
   gpath_draw_filled(ctx, s_minute_arrow);
   gpath_draw_outline(ctx, s_minute_arrow);
 
-  gpath_rotate_to(s_hour_arrow, (TRIG_MAX_ANGLE * (((t->tm_hour % 12) * 6) + (t->tm_min / 10))) / (12 * 6));
-  gpath_draw_filled(ctx, s_hour_arrow);
-  gpath_draw_outline(ctx, s_hour_arrow);
+  gpath_rotate_to(s_second_arrow, TRIG_MAX_ANGLE * t->tm_sec / 60);
+  gpath_draw_filled(ctx, s_second_arrow);
+  gpath_draw_outline(ctx, s_second_arrow);
 }
 
 static void date_update_proc(Layer *layer, GContext *ctx) {
