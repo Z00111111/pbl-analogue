@@ -1,0 +1,22 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "r3dl2ulz@gmail.com",
+    "longName": "Analogue Example",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "Analogue Example",
+    "targetPlatforms": [
+        "basalt"
+    ],
+    "uuid": "7d6bfb26-cbae-432b-8264-e02c17d252fe",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
