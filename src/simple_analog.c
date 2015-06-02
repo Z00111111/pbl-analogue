@@ -8,7 +8,7 @@ static TextLayer *s_day_label, *s_num_label;
 
 static GPath *s_tick_paths[NUM_CLOCK_TICKS];
 static GPath *s_second_arrow, *s_minute_arrow, *s_hour_arrow;
-static char s_num_buffer[4], s_day_buffer[6];
+static char s_num_buffer[6], s_day_buffer[6];
 
 static void bg_update_proc(Layer *layer, GContext *ctx) {
   graphics_context_set_fill_color(ctx, GColorBlack);
@@ -52,7 +52,7 @@ static void date_update_proc(Layer *layer, GContext *ctx) {
   strftime(s_day_buffer, sizeof(s_day_buffer), "%a", t);
   text_layer_set_text(s_day_label, s_day_buffer);
 
-  strftime(s_num_buffer, sizeof(s_num_buffer), "%d", t);
+  strftime(s_num_buffer, sizeof(s_num_buffer), "%d/%m", t);
   text_layer_set_text(s_num_label, s_num_buffer);
 }
 
@@ -72,21 +72,21 @@ static void window_load(Window *window) {
   layer_set_update_proc(s_date_layer, date_update_proc);
   layer_add_child(window_layer, s_date_layer);
 
-  s_day_label = text_layer_create(GRect(46, 114, 27, 20));
+  s_day_label = text_layer_create(GRect(39, 114, 27, 20));
   text_layer_set_text(s_day_label, s_day_buffer);
-  text_layer_set_background_color(s_day_label, GColorBlack);
+  text_layer_set_background_color(s_day_label, GColorRed);
   text_layer_set_text_color(s_day_label, GColorWhite);
   text_layer_set_font(s_day_label, fonts_get_system_font(FONT_KEY_GOTHIC_18));
 
   layer_add_child(s_date_layer, text_layer_get_layer(s_day_label));
 
-  s_num_label = text_layer_create(GRect(73, 114, 18, 20));
+  s_num_label = text_layer_create(GRect(66, 114, 40, 20));
   text_layer_set_text(s_num_label, s_num_buffer);
-  text_layer_set_background_color(s_num_label, GColorBlack);
+  text_layer_set_background_color(s_num_label, GColorRed);
   text_layer_set_text_color(s_num_label, GColorWhite);
   text_layer_set_font(s_num_label, fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD));
 
-  layer_add_child(s_date_layer, text_layer_get_layer(s_num_label));\
+  layer_add_child(s_date_layer, text_layer_get_layer(s_num_label));
 
 	s_hands_layer = layer_create(bounds);
   layer_set_update_proc(s_hands_layer, hands_update_proc);
