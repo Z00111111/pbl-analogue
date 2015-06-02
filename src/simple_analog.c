@@ -20,26 +20,27 @@ static void bg_update_proc(Layer *layer, GContext *ctx) {
 }
 
 static void hands_update_proc(Layer *layer, GContext *ctx) {
-  GRect bounds = layer_get_bounds(layer);
-
+	
   time_t now = time(NULL);
   struct tm *t = localtime(&now);
 
-  // minute/hour hand
-  graphics_context_set_fill_color(ctx, GColorOrange);
+  // second/minute/hour hand
   graphics_context_set_stroke_color(ctx, GColorBlack);
 	
 	graphics_context_set_antialiased(ctx, true);
 
   gpath_rotate_to(s_hour_arrow, (TRIG_MAX_ANGLE * (((t->tm_hour % 12) * 6) + (t->tm_min / 10))) / (12 * 6));
-  gpath_draw_filled(ctx, s_hour_arrow);
+  graphics_context_set_fill_color(ctx, GColorIslamicGreen);
+	gpath_draw_filled(ctx, s_hour_arrow);
   gpath_draw_outline(ctx, s_hour_arrow);
 
   gpath_rotate_to(s_minute_arrow, TRIG_MAX_ANGLE * t->tm_min / 60);
+	graphics_context_set_fill_color(ctx, GColorGreen);
   gpath_draw_filled(ctx, s_minute_arrow);
   gpath_draw_outline(ctx, s_minute_arrow);
 
   gpath_rotate_to(s_second_arrow, TRIG_MAX_ANGLE * t->tm_sec / 60);
+	graphics_context_set_fill_color(ctx, GColorBrightGreen);
   gpath_draw_filled(ctx, s_second_arrow);
   gpath_draw_outline(ctx, s_second_arrow);
 }
